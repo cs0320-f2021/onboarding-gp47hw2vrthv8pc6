@@ -64,7 +64,6 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
 
-    // TODO: Add your REPL here!
     try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
       String input;
       List<String[]> data = new ArrayList<String[]>();
@@ -75,8 +74,7 @@ public final class Main {
           String[] arguments = input.split(" ");
           MathBot mathbot = new MathBot();
           double result;
-          // TODO: complete your REPL by adding commands for addition "add" and subtraction
-          //  "subtract"
+          
           String command = arguments[0];
 
           if (command.equals("add")) {
@@ -119,7 +117,7 @@ public final class Main {
                 double dist1 = mathbot.distance(r, r1);
                 double dist2 = mathbot.distance(r, r2);
 
-                return (int)Math.round(dist1 - dist2);
+                return (int) Math.round(dist1 - dist2);
               }));
             } else if (arguments.length == 3) {
               String starName = arguments[2].replaceAll("\"", "");
@@ -159,7 +157,7 @@ public final class Main {
                 double dist1 = mathbot.distance(r, r1);
                 double dist2 = mathbot.distance(r, r2);
 
-                return (int)Math.round(dist1 - dist2);
+                return (int) Math.round(dist1 - dist2);
               }));
             }
             //Print computed neighbors.

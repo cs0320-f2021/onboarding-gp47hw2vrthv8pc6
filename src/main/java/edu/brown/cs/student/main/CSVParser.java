@@ -13,67 +13,75 @@ import java.util.List;
  * @author Student
  */
 public class CSVParser {
-    private List<String[]> rows = new ArrayList<String[]>();
-    private String[] cols;
+  private List<String[]> rows = new ArrayList<String[]>();
+  private String[] cols;
 
-    /**
-     * Default constructor.
-     */
-    public CSVParser() {
-        
+  /**
+   * Default constructor.
+   */
+  public CSVParser() {
+      
+  }
+
+  /**
+   * Read a CSV file: store the rows in memory as a list of String arrays 
+   * (rows) and store the column names as a String array (cols).
+   * 
+   * @param path Path to the CSV file.
+   */
+  public void read(String path) {
+    rows.clear();
+    try { 
+      File file = new File(path);
+      Scanner fileReader = new Scanner(file);
+      cols = fileReader.nextLine().split(",");
+      while (fileReader.hasNextLine()) { 
+        String line = fileReader.nextLine();
+        rows.add(line.split(","));
+      }
+      fileReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Obtain the column index of the specified column name.
+   * 
+   * @param colName A string specifying the desired column.
+   * @return The index (zero-indexed) of the given column.
+   */ 
+  public int getIndex(String colName) {
+    if (cols == null) {
+      return -1;
+    }
+      
+    int arrayLength = cols.length;
+    for (int i = 0; i < arrayLength; i++) {
+      if (cols[i].equals(colName)) {
+        return i;
+      } else {
+        continue;
+      }
     }
 
-    /**
-     * Read a CSV file: store the rows in memory as a list of String arrays 
-     * (rows) and store the column names as a String array (cols).
-     * 
-     * @param path Path to the CSV file.
-     */
-    public void read(String path) {
-        rows.clear();
-        try { 
-            File file = new File(path);
-            Scanner fileReader = new Scanner(file);
-            cols = fileReader.nextLine().split(",");
-            while (fileReader.hasNextLine()) { 
-                String line = fileReader.nextLine();
-                rows.add(line.split(","));
-            }
-            fileReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
+    return -1;
+  }
 
-    /**
-     * Obtain the column index of the specified column name.
-     * 
-     * @param colName A string specifying the desired column.
-     * @return The index (zero-indexed) of the given column.
-     */ 
-    public int getIndex(String colName) {
-        if (cols == null) {
-            return -1;
-        }
-        
-        int arrayLength = cols.length;
-        for (int i = 0; i < arrayLength; i++) {
-            if (cols[i].equals(colName)) {
-                return i;
-            } else {
-                continue;
-            }
-        }
+  /**
+   * Returns rows of the CSV parsed.
+   * @return An ArrayList of String arrays, the rows of the csv file.
+   */
+  public List<String[]> getRows() {
+    return rows;
+  }
 
-        return -1;
-    }
-
-    public List<String[]> getRows() {
-        return rows;
-    }
-
-    public String[] getCols() {
-        return cols;
-    }
+  /**
+   * Returns the columns of the CSV parsed.
+   * @return An array of Strings, the column names of the csv file.
+   */
+  public String[] getCols() {
+    return cols;
+  }
 }

@@ -79,7 +79,6 @@ public class MathBot {
       sum += Math.pow(r1[i] - r2[i], 2);
     }
 
-    return Math.pow(sum, 0.5);
+    return Math.sqrt(sum);
   }
-
 }
