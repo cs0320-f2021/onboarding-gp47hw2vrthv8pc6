@@ -10,6 +10,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
+import org.eclipse.jetty.io.ssl.SslClientConnectionFactory;
+
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -21,6 +23,8 @@ import spark.Spark;
 import spark.TemplateViewRoute;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.util.ArrayList;
+import java.util.List;
 /**
  * The Main class of our project. This is where execution begins.
  */
@@ -63,28 +67,110 @@ public final class Main {
     // TODO: Add your REPL here!
     try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
       String input;
+      List<String[]> data = new ArrayList<String[]>();
+      CSVParser csvparser = new CSVParser();
       while ((input = br.readLine()) != null) {
         try {
           input = input.trim();
           String[] arguments = input.split(" ");
           MathBot mathbot = new MathBot();
-        
+          double result;
           // TODO: complete your REPL by adding commands for addition "add" and subtraction
           //  "subtract"
-          if (arguments[0].equals("add")) {
-            double result = mathbot.add(Double.parseDouble(arguments[1]), 
+          String command = arguments[0];
+
+          if (command.equals("add")) {
+            result = mathbot.add(Double.parseDouble(arguments[1]), 
                                         Double.parseDouble(arguments[2]));
             System.out.println(result);
-          } else if (arguments[0].equals("subtract")) {
-            double result = mathbot.subtract(Integer.parseInt(arguments[1]), 
+          } else if (command.equals("subtract")) {
+            result = mathbot.subtract(Integer.parseInt(arguments[1]), 
                                         Integer.parseInt(arguments[2]));
             System.out.println(result);
-          } else {
-            throw new Exception("Can only add or subtract.");
+          } else if (command.equals("stars")) {
+            csvparser.read(arguments[1]);
+            data.clear();
+            data.addAll(csvparser.getRows());
+          } else if (command.equals("naive_neighbors")) { 
+            List<String[]> neighbors = new ArrayList<String[]>();
+            if (arguments.length == 5) {
+              int k = Integer.parseInt(arguments[1]);
+              double x = Double.parseDouble(arguments[2]);
+              double y = Double.parseDouble(arguments[3]);
+              double z = Double.parseDouble(arguments[4]);
+              int xIndex = csvparser.getIndex("X");
+              int yIndex = csvparser.getIndex("Y");
+              int zIndex = csvparser.getIndex("Z");
+
+              // Clear neighbors ArrayList to ensure we are not adding to 
+              // previously computed list of neighbors.
+              neighbors.clear();
+              neighbors.addAll(mathbot.naiveNeighbors(k, x, y, z, data, (row1, row2) -> {
+                double[] r1 = {Double.parseDouble(row1[xIndex]),
+                              Double.parseDouble(row1[yIndex]),
+                              Double.parseDouble(row1[zIndex])};
+
+                double[] r2 = {Double.parseDouble(row2[xIndex]),
+                              Double.parseDouble(row2[yIndex]),
+                              Double.parseDouble(row2[zIndex])};
+
+                double[] r = {x, y, z};
+
+                double dist1 = mathbot.distance(r, r1);
+                double dist2 = mathbot.distance(r, r2);
+
+                return (int)Math.round(dist1 - dist2);
+              }));
+            } else if (arguments.length == 3) {
+              String starName = arguments[2].replaceAll("\"", "");
+              List<String[]> filteredData = new ArrayList<String[]>();
+              String[] starRow = null;
+              for (String[] row : data) {
+                if (row[csvparser.getIndex("ProperName")].equals(starName)) {
+                  starRow = row;
+                } else {
+                  filteredData.add(row);
+                }
+              }
+              
+              int k = Integer.parseInt(arguments[1]);
+              int xIndex = csvparser.getIndex("X");
+              int yIndex = csvparser.getIndex("Y");
+              int zIndex = csvparser.getIndex("Z");
+
+              double x = Double.parseDouble(starRow[xIndex]);
+              double y = Double.parseDouble(starRow[yIndex]);
+              double z = Double.parseDouble(starRow[zIndex]);
+
+              // Clear neighbors ArrayList to ensure we are not adding to 
+              // previously computed list of neighbors.
+              neighbors.clear();
+              neighbors.addAll(mathbot.naiveNeighbors(k, x, y, z, filteredData, (row1, row2) -> {
+                double[] r1 = {Double.parseDouble(row1[xIndex]),
+                              Double.parseDouble(row1[yIndex]),
+                              Double.parseDouble(row1[zIndex])};
+
+                double[] r2 = {Double.parseDouble(row2[xIndex]),
+                              Double.parseDouble(row2[yIndex]),
+                              Double.parseDouble(row2[zIndex])};
+
+                double[] r = {x, y, z};
+
+                double dist1 = mathbot.distance(r, r1);
+                double dist2 = mathbot.distance(r, r2);
+
+                return (int)Math.round(dist1 - dist2);
+              }));
+            }
+            //Print computed neighbors.
+            for (String[] row : neighbors) {
+              System.out.println(row[csvparser.getIndex("StarID")]);
+            }
+          } else { 
+            throw new Exception("Could not process input.");
           }
-          
+
         } catch (Exception e) {
-          // e.printStackTrace();
           System.out.println("ERROR: We couldn't process your input");
         }
       }

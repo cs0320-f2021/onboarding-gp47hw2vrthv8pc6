@@ -6,11 +6,31 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for parsing CSV files. Assumes no entries contain commas. Clears memory 
+ * upon calling .read().
+ * 
+ * @author Student
+ */
 public class CSVParser {
-    List<String[]> rows = new ArrayList<String[]>();
-    String[] cols;
+    private List<String[]> rows = new ArrayList<String[]>();
+    private String[] cols;
 
-    public CSVParser(String path) {
+    /**
+     * Default constructor.
+     */
+    public CSVParser() {
+        
+    }
+
+    /**
+     * Read a CSV file: store the rows in memory as a list of String arrays 
+     * (rows) and store the column names as a String array (cols).
+     * 
+     * @param path Path to the CSV file.
+     */
+    public void read(String path) {
+        rows.clear();
         try { 
             File file = new File(path);
             Scanner fileReader = new Scanner(file);
@@ -26,6 +46,12 @@ public class CSVParser {
         }
     }
 
+    /**
+     * Obtain the column index of the specified column name.
+     * 
+     * @param colName A string specifying the desired column.
+     * @return The index (zero-indexed) of the given column.
+     */ 
     public int getIndex(String colName) {
         if (cols == null) {
             return -1;
@@ -41,5 +67,13 @@ public class CSVParser {
         }
 
         return -1;
+    }
+
+    public List<String[]> getRows() {
+        return rows;
+    }
+
+    public String[] getCols() {
+        return cols;
     }
 }
