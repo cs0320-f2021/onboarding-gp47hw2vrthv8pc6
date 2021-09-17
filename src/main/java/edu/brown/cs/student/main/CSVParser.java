@@ -29,25 +29,21 @@ public class CSVParser {
    * 
    * @param path Path to the CSV file.
    */
-  public void read(String path) {
+  public void read(String path) throws FileNotFoundException {
     rows.clear();
-    try { 
-      File file = new File(path);
-      Scanner fileReader = new Scanner(file);
-      cols = fileReader.nextLine().split(",");
-      while (fileReader.hasNextLine()) { 
-        String line = fileReader.nextLine();
-        rows.add(line.split(","));
-      }
-      fileReader.close();
-    } catch (FileNotFoundException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
+    File file = new File(path);
+    Scanner fileReader = new Scanner(file);
+    cols = fileReader.nextLine().split(",");
+    while (fileReader.hasNextLine()) { 
+      String line = fileReader.nextLine();
+      rows.add(line.split(","));
     }
+    fileReader.close();
   }
 
   /**
-   * Obtain the column index of the specified column name.
+   * Obtain the column index of the specified column name. If the column does 
+   * not exist, returns -1.
    * 
    * @param colName A string specifying the desired column.
    * @return The index (zero-indexed) of the given column.

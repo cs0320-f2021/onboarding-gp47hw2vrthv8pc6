@@ -42,7 +42,7 @@ public class MathBot {
 
   /**
    * Return first k rows of data nearest to x, y, z according to the given
-   * comparator.  
+   * comparator. If k > length(data), set k = length(data).
    * 
    * @param k Number of neighbors to find.
    * @param x X coordinate.
@@ -62,12 +62,15 @@ public class MathBot {
     // Shuffle in order to ensure equally-distant points are sampled randomly.
     Collections.shuffle(data);
     Collections.sort(data, comparator);
-    
-    return data.subList(0, k);
+    int length = k > data.size() ?  data.size() : k;
+
+    return data.subList(0, length);
   }
 
   /**
-   * Computes the Euclidean distance between two points r1 and r2.
+   * Computes the Euclidean distance between two points r1 and r2. If vectors 
+   * are of unequal dimension, consider only the first n components, where n 
+   * is the dimension of the smaller vector.
    * @param r1 A vector of arbitrary dimension n.
    * @param r2 A vector of arbitrary dimension n.
    * @return Norm(r1 - r2); i.e., he distance between r1 and r2.
@@ -75,7 +78,8 @@ public class MathBot {
    */
   public double distance(double[] r1, double[] r2) {
     double sum = 0;
-    for (int i = 0; i < r1.length; i++) {
+    int dim = r1.length < r2.length ? r1.length : r2.length;
+    for (int i = 0; i < dim; i++) {
       sum += Math.pow(r1[i] - r2[i], 2);
     }
 
