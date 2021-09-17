@@ -78,8 +78,9 @@ public final class Main {
           int start = 0; 
           int i = 0;
           for (char c : input.toCharArray()) {
-            if (c == (' ') && !inQuotes) {
-              tempArguments.add(input.substring(start, i));
+            String substr = input.substring(start, i);
+            if (c == (' ') && !inQuotes && !(substr.replaceAll(" ", "").equals(""))) {
+              tempArguments.add(substr);
               start = i + 1;
             } else if (c == '"') {
               inQuotes = !inQuotes;
