@@ -60,9 +60,8 @@ public class MathBot {
                                       List<String[]> data, 
                                       Comparator<String[]> comparator) {
     // Shuffle in order to ensure equally-distant points are sampled randomly.
-    Collections.shuffle(data);
     Collections.sort(data, comparator);
-    int length = k > data.size() ?  data.size() : k;
+    int length = k > data.size() ? data.size() : k;
 
     return data.subList(0, length);
   }

@@ -132,9 +132,9 @@ public class MathBotTest {
     double y = 4.232; 
     double z = 6.134; 
     List<String[]> data = new ArrayList<String[]>();
-    String[] row1 = {"1.123131", "2", "-3"};
-    String[] row2 = {"1.123123", "2", "3"};
-    String[] row3 = {"11", "2", "100000"};
+    String[] row1 = {"-0.47175","-0.36132","-1.15037", "70667"};
+    String[] row2 = {"-0.50359","-0.42128","-1.1767", "71454"};
+    String[] row3 = {"-0.50362","-0.42139","-1.17665", "71457"};
     data.add(row1);
     data.add(row2);
     data.add(row3);
@@ -161,10 +161,9 @@ public class MathBotTest {
     List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
 
     List<String[]> expectedResults = new ArrayList<String[]>();
-    expectedResults.add(row2);
     expectedResults.add(row1);
+    expectedResults.add(row2);
     expectedResults.add(row3);
-
     assertEquals(results, expectedResults);
   }
 

@@ -71,7 +71,25 @@ public final class Main {
       while ((input = br.readLine()) != null) {
         try {
           input = input.trim();
-          String[] arguments = input.split(" ");
+
+          //parse arguments 
+          List<String> tempArguments = new ArrayList<String>();
+          boolean inQuotes = false;
+          int start = 0; 
+          int i = 0;
+          for (char c : input.toCharArray()) {
+            if (c == (' ') && !inQuotes) {
+              tempArguments.add(input.substring(start, i));
+              start = i + 1;
+            } else if (c == '"') {
+              inQuotes = !inQuotes;
+            }
+            i++;
+          }
+          tempArguments.add(input.substring(start));
+          String[] arguments = new String[tempArguments.size()];
+          tempArguments.toArray(arguments);
+          
           MathBot mathbot = new MathBot();
           double result;
           
@@ -89,6 +107,7 @@ public final class Main {
             csvparser.read(arguments[1]);
             data.clear();
             data.addAll(csvparser.getRows());
+            System.out.println("Read " + data.size() + " stars from " + arguments[1]);
           } else if (command.equals("naive_neighbors")) { 
             List<String[]> neighbors = new ArrayList<String[]>();
             if (arguments.length == 5) {
@@ -130,7 +149,6 @@ public final class Main {
                   filteredData.add(row);
                 }
               }
-              
               int k = Integer.parseInt(arguments[1]);
               int xIndex = csvparser.getIndex("X");
               int yIndex = csvparser.getIndex("Y");
@@ -157,7 +175,7 @@ public final class Main {
                 double dist1 = mathbot.distance(r, r1);
                 double dist2 = mathbot.distance(r, r2);
 
-                return (int) Math.round(dist1 - dist2);
+                return (int) Math.signum(dist1 - dist2);
               }));
             }
             //Print computed neighbors.
