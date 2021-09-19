@@ -35,6 +35,10 @@ There was also a bizarre bug with JUnit's `assertNull` function and the
 columns returned by `CSVParser.getCols()`, and so this test has not been 
 performed. 
 
+Lastly, Checkstyle has been erroneously reporting trailing spaces in the code. 
+I am not sure how to fix this, as there appear to be no actual trailing spaces 
+in the lines that have been flagged.
+
 # Tests 
 System testing ensures that the REPL appropriately handles: 
 - Errors (`error.test`)

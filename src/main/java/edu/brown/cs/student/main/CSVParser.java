@@ -28,6 +28,7 @@ public class CSVParser {
    * (rows) and store the column names as a String array (cols).
    * 
    * @param path Path to the CSV file.
+   * @throws FileNotFoundException in the case that the file is not found.
    */
   public void read(String path) throws FileNotFoundException {
     rows.clear();

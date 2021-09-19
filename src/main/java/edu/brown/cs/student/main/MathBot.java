@@ -45,9 +45,6 @@ public class MathBot {
    * comparator. If k > length(data), set k = length(data).
    * 
    * @param k Number of neighbors to find.
-   * @param x X coordinate.
-   * @param y Y coordinate.
-   * @param z Z coordinate.
    * @param data The data from which the k neighbors will be selected.
    * @param comparator Comparison function used to determine distance. 
    * @return The k "nearest" neighbors.
