@@ -31,7 +31,6 @@ public class MathBotTest {
     assertEquals(1, output, 0.01);
   }
 
-  // TODO: add more unit tests of your own
   @Test 
   public void testSubtractLargerNumbers() {
     MathBot matherator9003 = new MathBot();
@@ -158,7 +157,7 @@ public class MathBotTest {
       }
     };
 
-    List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
+    List<String[]> results = matherator.naiveNeighbors(k, data, comp);
 
     List<String[]> expectedResults = new ArrayList<String[]>();
     expectedResults.add(row1);
@@ -215,7 +214,7 @@ public class MathBotTest {
     List<Boolean> equalityResults = new ArrayList<Boolean>();
 
     for (int i = 0; i < 100; i++) {
-      List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
+      List<String[]> results = matherator.naiveNeighbors(k, data, comp);
       equalityResults.add(results.equals(expectedResults));
     }
     
@@ -258,7 +257,7 @@ public class MathBotTest {
       }
     };
 
-    List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
+    List<String[]> results = matherator.naiveNeighbors(k, data, comp);
 
     List<String[]> expectedResults = new ArrayList<String[]>();
     expectedResults.add(row2);
@@ -302,7 +301,7 @@ public class MathBotTest {
       }
     };
 
-    List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
+    List<String[]> results = matherator.naiveNeighbors(k, data, comp);
 
     List<String[]> expectedResults = new ArrayList<String[]>();
 
@@ -343,7 +342,7 @@ public class MathBotTest {
       }
     };
 
-    List<String[]> results = matherator.naiveNeighbors(k, x, y, z, data, comp);
+    List<String[]> results = matherator.naiveNeighbors(k, data, comp);
     List<String[]> expectedResults = new ArrayList<String[]>();
 
     expectedResults.add(row3);

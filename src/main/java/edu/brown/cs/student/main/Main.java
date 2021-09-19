@@ -123,7 +123,7 @@ public final class Main {
               // Clear neighbors ArrayList to ensure we are not adding to 
               // previously computed list of neighbors.
               neighbors.clear();
-              neighbors.addAll(mathbot.naiveNeighbors(k, x, y, z, data, (row1, row2) -> {
+              neighbors.addAll(mathbot.naiveNeighbors(k, data, (row1, row2) -> {
                 double[] r1 = {Double.parseDouble(row1[xIndex]),
                               Double.parseDouble(row1[yIndex]),
                               Double.parseDouble(row1[zIndex])};
@@ -162,7 +162,7 @@ public final class Main {
               // Clear neighbors ArrayList to ensure we are not adding to 
               // previously computed list of neighbors.
               neighbors.clear();
-              neighbors.addAll(mathbot.naiveNeighbors(k, x, y, z, filteredData, (row1, row2) -> {
+              neighbors.addAll(mathbot.naiveNeighbors(k, filteredData, (row1, row2) -> {
                 double[] r1 = {Double.parseDouble(row1[xIndex]),
                               Double.parseDouble(row1[yIndex]),
                               Double.parseDouble(row1[zIndex])};

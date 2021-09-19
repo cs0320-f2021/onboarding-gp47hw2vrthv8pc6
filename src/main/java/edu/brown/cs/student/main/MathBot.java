@@ -54,12 +54,10 @@ public class MathBot {
    * @author Student
    */
   public List<String[]> naiveNeighbors(int k, 
-                                      double x, 
-                                      double y, 
-                                      double z, 
                                       List<String[]> data, 
                                       Comparator<String[]> comparator) {
     // Shuffle in order to ensure equally-distant points are sampled randomly.
+    // Collections.shuffle(data);
     Collections.sort(data, comparator);
     int length = k > data.size() ? data.size() : k;
 
