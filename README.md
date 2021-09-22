@@ -69,6 +69,10 @@ parsed a `.csv` is still capable of returning (empty) values for rows (see above
 for column case), that instances dump parsed `.csv`s upon calling `read()`, and
 that getters work properly. 
 
+Unit testing of `CommandHandler`...
+
+`Error` has not been tested due to trivial functionality. 
+
 # Usage 
 To build use:
 `mvn package`

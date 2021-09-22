@@ -283,7 +283,7 @@ public class MathBotTest {
     data.add(row2);
     data.add(row3);
 
-    Comparator<String[]> comp = new Comparator<String[]>() {
+    Comparator<String[]> comp = new Comparator<String[]>(){
       public int compare(String[] row1, String[] row2) {
         double[] r1 = {Double.parseDouble(row1[0]),
                        Double.parseDouble(row1[1]),

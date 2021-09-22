@@ -31,7 +31,7 @@ public class CSVParser {
    * @throws FileNotFoundException in the case that the file is not found.
    */
   public void read(String path) throws FileNotFoundException {
-    rows.clear();
+    this.clear();
     File file = new File(path);
     Scanner fileReader = new Scanner(file);
     cols = fileReader.nextLine().split(",");
@@ -40,6 +40,15 @@ public class CSVParser {
       rows.add(line.split(","));
     }
     fileReader.close();
+  }
+
+  /**
+   * "Resets" the CVSParser, clearing instance's rows attribute and setting 
+   * cols attribute to null. 
+   */
+  public void clear() {
+    rows.clear();
+    cols = null;
   }
 
   /**
